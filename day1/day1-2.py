@@ -100,8 +100,7 @@ def printout(lat, lon):
 if __name__ == "__main__":
     indir = []
     with open(sys.argv[1]) as f:
-        for elem in string.split(f.read()):
-            indir.append(string.rstrip(elem, ","))
+        indir = string.split(f.read(),", ")
 
     compass = ["n", "e", "s", "w"]
     facing = 0
@@ -114,6 +113,7 @@ if __name__ == "__main__":
     hor_lines = []
 
     for direction in indir:
+        direction = direction.strip()
         facing = face(direction, compass, facing)
         [lat, lon] = visited_coords[-1]
         new_point = move(direction, compass, facing, [lat, lon])

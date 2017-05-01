@@ -48,7 +48,7 @@ def move(direction, compass, facing, lat, lon):
 if __name__ == "__main__":
     indir = []
     with open(sys.argv[1]) as f:
-        indir = string.split(f.read(),", ")
+        indir = string.split(f.read(), ", ")
 
     compass = ["n", "e", "s", "w"]
     facing = 0

@@ -37,40 +37,33 @@ import string
 import sys
 
 
-def move(keydir):
+def move(movements, cur):
     """Move around the keypad."""
-    try:
-        curx = 1
-        cury = 1
-        for direction in keydir:
-            if direction == "U":
-                cury -= 1
-            elif direction == "D":
-                cury += 1
-            elif direction == "L":
-                curx -= 1
-            else:
-                curx += 1
-
-            if curx <= 0:
-                curx = 0
-            elif curx >= len(keypad[0]):
-                curx = len(keypad[0]) - 1
-            if cury <= 0:
-                cury = 0
-            elif cury >= len(keypad):
-                cury == len(keypad) - 1
-            return [curx, cury]
-    except IndexError, exc:
-        print exc
-    except Exception, exc:
-        print exc
+    for direction in movements:
+        dir_index = dirs[direction][0]
+        dir_impact = dirs[direction][1]
+        cur[dir_index] += dir_impact
+        if cur[dir_index] < 0:
+            cur[dir_index] = 0
+        elif cur[dir_index] > 2:
+            cur[dir_index] = 2
+    return cur
 
 
 with open(sys.argv[1]) as f:
-    indir = string.split(f.read(), "\n")
+    indir = f.read().split("\n")
 
-keypad = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
+keypad = (("1", "2", "3"), ("4", "5", "6"), ("7", "8", "9"))
+# Use dirs to track available keypad directions and their impact on movement
+#   through the keypad hash
+dirs = {"U": [0, -1], "D": [0, 1], "L": [1, -1], "R": [1, 1]}
 keyseq = []
+cur_loc = [1, 1]
+
 for keydir in indir:
-    keyseq.append(move(keydir))
+    if len(keydir) > 0:
+        # print(cur_loc)
+        cur_loc = move(keydir.strip(), cur_loc)
+        keyseq.append(keypad[cur_loc[0]][cur_loc[1]])
+
+print("".join(keyseq))

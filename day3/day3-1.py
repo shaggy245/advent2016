@@ -29,7 +29,7 @@ not_triangles = 0
 
 for tri in triangles:
     if len(tri) > 0:
-        legs = tri.split()
+        legs = sorted(tri.split())
         print("########################")
         print(float(legs[0]), float(legs[1]), float(legs[2]), "|", float(legs[0]) + float(legs[1]), ">", float(legs[2]))
         if float(legs[0]) + float(legs[1]) > float(legs[2]):

@@ -29,15 +29,15 @@ not_triangles = 0
 
 for tri in triangles:
     if len(tri) > 0:
-        legs = sorted(tri.split())
-        print("########################")
-        print(float(legs[0]), float(legs[1]), float(legs[2]), "|", float(legs[0]) + float(legs[1]), ">", float(legs[2]))
+        legs = sorted([float(i) for i in tri.split()])
+        #print("########################")
+        #print(float(legs[0]), float(legs[1]), float(legs[2]), "|", float(legs[0]) + float(legs[1]), ">", float(legs[2]))
         if float(legs[0]) + float(legs[1]) > float(legs[2]):
-            print("LEGIT")
+        #    print("LEGIT")
             triangles_count += 1
         else:
-            print("NOT LEGIT")
+        #    print("NOT LEGIT")
             not_triangles += 1
 
 print(triangles_count)
-print(not_triangles)
+#print(not_triangles)

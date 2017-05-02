@@ -32,7 +32,7 @@ for tri in triangles:
         legs = sorted([float(i) for i in tri.split()])
         #print("########################")
         #print(float(legs[0]), float(legs[1]), float(legs[2]), "|", float(legs[0]) + float(legs[1]), ">", float(legs[2]))
-        if float(legs[0]) + float(legs[1]) > float(legs[2]):
+        if legs[0] + legs[1] > legs[2]:
         #    print("LEGIT")
             triangles_count += 1
         else:

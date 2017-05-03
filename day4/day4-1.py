@@ -25,7 +25,7 @@ import sys
 import re
 
 
-def decrypt(room):
+def find_legit(room):
     room_char_count = []
     for char in sorted(set("".join(room[0:-2]))):
         room_char_count.append((char,"".join(room[0:-2]).count(char)))
@@ -43,6 +43,6 @@ sector_sum = 0
 
 for line in lines:
     room_datum = re.split("-|\[", line.rstrip("]"))
-    sector_sum += decrypt(room_datum)
+    sector_sum += find_legit(room_datum)
 
 print(sector_sum)

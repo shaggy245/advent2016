@@ -53,8 +53,9 @@ def move(movements, cur):
 with open(sys.argv[1]) as f:
     indir = f.read().split("\n")
 
-keypad = (("*", "*", "1", "*", "*"), ("*", "2", "3", "4", "*"), ("5", "6", "7", "8", "9"),
-         ("*", "A", "B", "C", "*"), ("*", "*", "D", "*", "*"))
+keypad = (("*", "*", "1", "*", "*"), ("*", "2", "3", "4", "*"),
+          ("5", "6", "7", "8", "9"), ("*", "A", "B", "C", "*"),
+          ("*", "*", "D", "*", "*"))
 
 # Use dirs to track available keypad directions and their impact on movement
 #   through the keypad hash

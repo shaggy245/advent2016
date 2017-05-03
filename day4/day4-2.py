@@ -19,6 +19,9 @@ What is the sector ID of the room where North Pole objects are stored?
 """
 
 import sys
+import string
 
 with open(sys.argv[1]) as f:
     lines = f.read().rstrip("\n").split("\n")
+
+alphabet = list(string.ascii_lowercase)

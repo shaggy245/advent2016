@@ -22,22 +22,21 @@ In your puzzle input, how many of the listed triangles are possible?
 import sys
 
 with open(sys.argv[1]) as f:
-    triangles = f.read().split("\n")
+    lines = f.read().rstrip("\n").split("\n")
 
 triangles_count = 0
 not_triangles = 0
 
-for tri in triangles:
-    if len(tri) > 0:
-        legs = sorted([float(i) for i in tri.split()])
-        #print("########################")
-        #print(float(legs[0]), float(legs[1]), float(legs[2]), "|", float(legs[0]) + float(legs[1]), ">", float(legs[2]))
-        if legs[0] + legs[1] > legs[2]:
-        #    print("LEGIT")
-            triangles_count += 1
-        else:
-        #    print("NOT LEGIT")
-            not_triangles += 1
+for tri in lines:
+    legs = sorted([float(i) for i in tri.split()])
+    #print("########################")
+    #print(float(legs[0]), float(legs[1]), float(legs[2]), "|", float(legs[0]) + float(legs[1]), ">", float(legs[2]))
+    if legs[0] + legs[1] > legs[2]:
+    #    print("LEGIT")
+        triangles_count += 1
+    else:
+    #    print("NOT LEGIT")
+        not_triangles += 1
 
 print(triangles_count)
 #print(not_triangles)

@@ -51,7 +51,7 @@ def move(movements, cur):
 
 
 with open(sys.argv[1]) as f:
-    indir = f.read().split("\n")
+    lines = f.read().rstrip("\n").split("\n")
 
 keypad = (("*", "*", "1", "*", "*"), ("*", "2", "3", "4", "*"),
           ("5", "6", "7", "8", "9"), ("*", "A", "B", "C", "*"),
@@ -63,10 +63,9 @@ dirs = {"U": [0, -1], "D": [0, 1], "L": [1, -1], "R": [1, 1]}
 keyseq = []
 cur_loc = [2, 0]
 
-for keydir in indir:
-    if len(keydir) > 0:
-        # print(cur_loc)
-        cur_loc = move(keydir.strip(), cur_loc)
-        keyseq.append(keypad[cur_loc[0]][cur_loc[1]])
+for keydir in lines:
+    # print(cur_loc)
+    cur_loc = move(keydir.strip(), cur_loc)
+    keyseq.append(keypad[cur_loc[0]][cur_loc[1]])
 
 print("".join(keyseq))

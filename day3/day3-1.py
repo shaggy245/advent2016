@@ -25,7 +25,6 @@ with open(sys.argv[1]) as f:
     lines = f.read().rstrip("\n").split("\n")
 
 triangles_count = 0
-not_triangles = 0
 
 for tri in lines:
     legs = sorted([float(i) for i in tri.split()])
@@ -34,9 +33,6 @@ for tri in lines:
     if legs[0] + legs[1] > legs[2]:
     #    print("LEGIT")
         triangles_count += 1
-    else:
-    #    print("NOT LEGIT")
-        not_triangles += 1
 
 print(triangles_count)
 #print(not_triangles)

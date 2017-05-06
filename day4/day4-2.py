@@ -42,11 +42,19 @@ def circle_abc():
 """
 
 def decode(code):
-    for x in " ".join(code[:-2]):
-        if x in alphabet:
-            
-    print(" ".join(code[:-2]), str(int(code[-2]) % 26) )
-
+    try:
+        for x in " ".join(code[:-2]):
+            if x in alphabet:
+                #print(alphabet.index(x))
+                # May have issue with using len(alphabet) in modulus
+                decoded_idx = alphabet.index(x) + (int(code[-2]) % len(alphabet))
+                decoded = alphabet[decoded_idx]
+                print(decoded)
+    except IndexError:
+        decoded_idx = (int(code[-2]) % len(alphabet)) - ((len(alphabet) - 1) - alphabet.index(x))
+        #print("ERROR DECODED INDEX: ", decoded_idx)
+        decoded = alphabet[decoded_idx]
+        print(decoded)
 
 with open(sys.argv[1]) as f:
     lines = f.read().rstrip("\n").split("\n")

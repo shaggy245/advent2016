@@ -19,7 +19,7 @@ What is the sector ID of the room where North Pole objects are stored?
 """
 
 import re
-import sys
+import argparse
 import string
 
 
@@ -60,16 +60,19 @@ def decode(code):
     return roomname
 
 
-def find_code(code):
-    interesting_code = "north"
+def find_code(code, interesting_code):
     if interesting_code in code[0]:
         return 1
     else:
         return 0
 
 
-with open(sys.argv[1]) as f:
-    lines = f.read().rstrip("\n").split("\n")
+parser = argparse.ArgumentParser(description='Advent of code.')
+parser.add_argument('inputfile', type=argparse.FileType('r'), help='Path to input file')
+parser.add_argument('-s', '--searchstring', help='String to find in decoded data', default="")
+args = parser.parse_args()
+
+lines = args.inputfile.read().rstrip("\n").split("\n")
 
 alphabet = list(string.ascii_lowercase)
 codes = []
@@ -80,9 +83,8 @@ for line in lines:
     room_code = find_legit(room_datum)
     if room_code > 0:
         decoded_room = decode(room_datum), room_datum[-2]
-        if find_code(decoded_room):
+        if args.searchstring and find_code(decoded_room, args.searchstring):
             print(decoded_room)
-        #print(line)
     sector_sum += room_code
 
 print(sector_sum)

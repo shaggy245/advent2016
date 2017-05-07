@@ -60,6 +60,14 @@ def decode(code):
     return roomname
 
 
+def find_code(code):
+    interesting_code = "north"
+    if interesting_code in code[0]:
+        return 1
+    else:
+        return 0
+
+
 with open(sys.argv[1]) as f:
     lines = f.read().rstrip("\n").split("\n")
 
@@ -71,7 +79,9 @@ for line in lines:
     room_datum = re.split("-|\[", line.rstrip("]"))
     room_code = find_legit(room_datum)
     if room_code > 0:
-        print(decode(room_datum), room_datum[-2])
+        decoded_room = decode(room_datum), room_datum[-2]
+        if find_code(decoded_room):
+            print(decoded_room)
         #print(line)
     sector_sum += room_code
 

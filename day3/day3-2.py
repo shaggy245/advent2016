@@ -19,13 +19,12 @@ triangles are possible?
 
 import sys
 
+
 def get_triangles(lines):
-    cols = [[] for x in range(0,len(lines[0].split()))]
     triangles = []
-    for line in lines:
-        x_s = line.split()
-        for index, element in enumerate(x_s):
-            cols[index].append(int(element))
+    # Transpose lines matrix
+    cols = [[int(row[i]) for row in lines ] for i in range(len(lines[0]))]
+    # Separate each column of data into list of triangle-sides
     for index in range(0, len(cols)):
         triangles.extend([cols[index][x:x+3] for x in range(0, len(cols[index]), 3)])
     return triangles
@@ -34,14 +33,14 @@ def get_triangles(lines):
 def test_triangles(triangles):
     triangles_count = 0
     for tri in triangles:
-            legs = sorted(tri)
-            if legs[0] + legs[1] > legs[2]:
-                triangles_count += 1
-
+        legs = sorted(tri)
+        if len(legs) == 3 and (legs[0] + legs[1] > legs[2]):
+            triangles_count += 1
     return triangles_count
 
 
 with open(sys.argv[1]) as f:
-    lines = f.read().rstrip("\n").split("\n")
+    # Create matrix of input file
+    lines = [i.split() for i in f.read().rstrip("\n").split("\n")]
 
 print(test_triangles(get_triangles(lines)))

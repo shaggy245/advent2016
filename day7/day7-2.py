@@ -21,9 +21,9 @@ import re
 def has_palindrome(ip_list):
     try:
         for ip in ip_list:
-            for i in range(0, (len(ip) - 3)):
-                if ip[i] != ip[i+1] and (ip[i] == ip[i + 3] and ip[i+1] == ip[i + 2]):
-                    return True
+            for i in range(0, (len(ip) - 2)):
+                if ip[i] == ip[i + 2] and ip[i] != ip[i + 1]:
+                    return ip[i:i+2]
         return False
     except Exception as exc:
         print(exc)
@@ -38,6 +38,11 @@ tls_count = 0
 
 for line in lines:
     temp = re.split("\[|\]", line)
+    supernet_tri = has_palindrome([temp[i] for i in range(0, len(temp), 2)])
+    if supernet_tri:
+        has_palindrome([temp[i] for i in range(0, len(temp), 2)])
+
+
     if (has_palindrome([temp[i] for i in range(0, len(temp), 2)])
         and not has_palindrome([temp[i] for i in range(1, len(temp), 2)])):
         tls_count += 1

@@ -36,9 +36,9 @@ def calc_password(door_id):
         try:
             if door_id_md5.startswith("00000") and password[int(door_id_md5[5])] == "_":
                 password[int(door_id_md5[5])] = door_id_md5[6]
+                print("".join(password), end="\r")
         except Exception:
             pass
-        print("".join(password), end="\r")
         extra_char += 1
     return "".join(password)
 

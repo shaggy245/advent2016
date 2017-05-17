@@ -85,21 +85,21 @@ def yikes2(line, multiplier):
         #print(i)
         if line[i]=="(":
             #print("MARKER START:",line[i])
-            print("LINE:",line)
+            #print("LINE:",line)
             marker = grab_marker(line[i:])
             char_count, dup = [int(y) for y in marker[1:-1].split("x")]
             ddata = line[(i + len(marker)):(i + len(marker) + char_count)]
-            multiplier *= dup
+            new_multiplier = multiplier * dup
             i += len(marker) + char_count
-            print("DDATA:",ddata)
-            print("MULTIPLIER:",multiplier)
+            #print("DDATA:",ddata)
+            #print("UPDATE MULTIPLIER:",new_multiplier)
             while ddata[-1] in "(0123456789x)":
                 i += 1
                 ddata += line[i]
-            yikes2(ddata, multiplier)
+            yikes2(ddata, new_multiplier)
         elif line[i] in list(string.ascii_uppercase):
             lead_char_count = count_chars(line[i:])
-            print("CHARS:",line[i:i+lead_char_count],lead_char_count,multiplier)
+            #print("CHARS:",line[i:i+lead_char_count],lead_char_count,multiplier)
             decompress_count += (lead_char_count * multiplier)
             i += lead_char_count
         else:

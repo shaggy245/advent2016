@@ -25,9 +25,10 @@ its decompressed length.
 
 What is the decompressed length of the file using this improved format?
 """
-
+from __future__ import print_function
 import argparse
 import re
+import string
 
 
 def grab_number(line):
@@ -67,84 +68,73 @@ def count_sequences(line):
     shorter_line += str(temp_count)
     print(shorter_line)
 
-def strip_chars(line):
-    i = 0
+def count_chars(line):
     ccount = 0
-    while line[i] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-        ccount +=  1
-        i += 1
+    for char in line:
+        if char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+            ccount +=  1
+        else:
+            return ccount
     return ccount
 
 
-def yikes_rec2(line, ccount):
+def yikes2(line, multiplier):
+    global decompress_count
     i = 0
-    ddata = ""
-    tempcount = strip_chars(line)
-    ccount += tempcount
-    i += tempcount
-    ddata = line[i:]
-    if line[i] in "(0123456789x)":
-        marker = grab_marker(line[i:])
-        char_count, dup = [int(y) for y in marker[1:-1].split("x")]
-        #decompress += char_count * dup
-        ddata = line[(i + len(marker)):(i + len(marker) + char_count)] * dup + line[(i + len(marker) + char_count):]
-        # ddata += line[0:(char_count * dup)]
-        print("DDATA marker line: ", line, len(line), ccount)
-        print("DDATA marker ddata: ", ddata, len(ddata), ccount)
-
-
-    if "(" in ddata:
-        yikes_rec2(ddata[:], ccount)
-    else:
-        #print(decompress)
-        ccount += len(ddata)
-        print("FINAL DDATA: ", len(ddata), ccount)
-        return ccount
-
-
-def yikes_rec(line, ccount):
-    i = 0
-    ddata = ""
     while i < len(line):
-        if line[i] in "(0123456789x)":
+        #print(i)
+        if line[i]=="(":
+            #print("MARKER START:",line[i])
+            print("LINE:",line)
             marker = grab_marker(line[i:])
             char_count, dup = [int(y) for y in marker[1:-1].split("x")]
-            #decompress += char_count * dup
-            ddata += line[(i + len(marker)):(i + len(marker) + char_count)] * dup
-            # ddata += line[0:(char_count * dup)]
-            #print("DDATA marker ddata: ", ddata, len(ddata))
-            #print("DDATA marker line: ", line, len(line))
+            ddata = line[(i + len(marker)):(i + len(marker) + char_count)]
+            multiplier *= dup
             i += len(marker) + char_count
+            print("DDATA:",ddata)
+            print("MULTIPLIER:",multiplier)
+            while ddata[-1] in "(0123456789x)":
+                i += 1
+                ddata += line[i]
+            yikes2(ddata, multiplier)
+        elif line[i] in list(string.ascii_uppercase):
+            lead_char_count = count_chars(line[i:])
+            print("CHARS:",line[i:i+lead_char_count],lead_char_count,multiplier)
+            decompress_count += (lead_char_count * multiplier)
+            i += lead_char_count
         else:
-            #decompress += 1
-            print("a")
-            ddata += line[i]
-            ccount += 1
-            #print("DDATA char ddata: ",ddata, len(ddata))
-            #print("DDATA char line: ", line, len(line))
-            i += 1
-    if "(" in ddata:
-        #print("###############################################")
-        yikes_rec(ddata[:], ccount)
-    else:
-        #print(decompress)
-        print("FINAL DDATA: ", len(ddata), ccount)
-        return len(ddata)
+            break
 
 
 def yikes(line):
-    decompress = 0
+    global decompress_count
     i = 0
     while i < len(line):
+    #while "(" in line:
+        #print(i)
         if line[i]=="(":
+            #print("MARKER START:",line[i])
+            print("LINE:",line)
             marker = grab_marker(line[i:])
             char_count, dup = [int(y) for y in marker[1:-1].split("x")]
-            decompress += char_count * dup
+            ddata = line[(i + len(marker)):(i + len(marker) + char_count)] * dup
             i += len(marker) + char_count
+            print("DDATA:",ddata)
+            while ddata[-1] in "(0123456789x)":
+                i += 1
+                ddata += line[i]
+            if ddata[0] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+                lead_char_count = count_chars(line[i:])
+                decompress_count += lead_char_count
+                i += lead_char_count
+            yikes(ddata)
+        elif line[i] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+            lead_char_count = count_chars(line[i:])
+            decompress_count += lead_char_count
+            i += lead_char_count
+            #print("CHAR COUNT:", decompress_count)
         else:
-            decompress += 1
-            i += 1
-    print(decompress)
+            break
 
 
 parser = argparse.ArgumentParser(description='Advent of code.')
@@ -152,6 +142,7 @@ parser.add_argument('inputfile', type=argparse.FileType('r'),
                     help='Path to input file')
 args = parser.parse_args()
 line = args.inputfile.read().rstrip("\n")
-print(line)
+decompress_count = 0
 #count_sequences(line)
-print(yikes_rec2(line, 0))
+yikes2(line,1)
+print("FINAL:",decompress_count)

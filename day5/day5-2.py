@@ -32,7 +32,9 @@ def calc_password(door_id):
     extra_char = 0
     print("".join(password), end = "\r")
     while "_" in password:
-        door_id_md5 = md5sum((door_id + str(extra_char)))
+        md5 = hashlib.new("md5")
+        md5.update((door_id + str(extra_char)).encode("utf-8"))
+        door_id_md5 = md5.hexdigest()
         try:
             if door_id_md5.startswith("00000") and password[int(door_id_md5[5])] == "_":
                 password[int(door_id_md5[5])] = door_id_md5[6]

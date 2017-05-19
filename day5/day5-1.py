@@ -20,19 +20,17 @@ import argparse
 import hashlib
 
 
-def md5sum(decoded_string):
-    md5 = hashlib.new("md5")
-    md5.update(decoded_string.encode("utf-8"))
-    return md5.hexdigest()
-
-
 def calc_password(door_id):
     password = ""
     extra_char = 0
-    while len(password) < 8:
-        door_id_md5 = md5sum((door_id + str(extra_char)))
-        if door_id_md5.startswith("00000"):
+    cnt = 0
+    while cnt < 8:
+        md5 = hashlib.new("md5")
+        md5.update((door_id + str(extra_char)).encode("utf-8"))
+        door_id_md5 = md5.hexdigest()
+        if door_id_md5[:5] == "00000":
             password += door_id_md5[5]
+            cnt += 1
         extra_char += 1
     return password
 
@@ -41,6 +39,5 @@ parser = argparse.ArgumentParser(description='Advent of code.')
 parser.add_argument('inputfile', type=argparse.FileType('r'), help='Path to input file')
 args = parser.parse_args()
 lines = args.inputfile.read().rstrip("\n").split("\n")
-door_id = lines[0]
 
-print(calc_password(door_id))
+print(calc_password(lines[0]))

@@ -34,26 +34,13 @@ def find_legit(room):
     else:
         return 0
 
-"""
-def circle_abc():
-    while True:
-        for letter in alphabet:
-            yield letter
-"""
-
 
 def decode(code):
     roomname = ""
     for x in " ".join(code[:-2]):
         if x in alphabet:
-            # May have issue with using len(alphabet) in modulus
-            decoded_idx = alphabet.index(x) + (int(code[-2]) % len(alphabet))
-            try:
-                decoded = alphabet[decoded_idx]
-            except IndexError:
-                decoded_idx = ((int(code[-2]) % len(alphabet))
-                                - (len(alphabet) - alphabet.index(x)))
-                decoded = alphabet[decoded_idx]
+            # Add code to char-index in alphabet, % 26 to cycle through ABC list
+            decoded = alphabet[((alphabet.index(x) + (int(code[-2]))) % len(alphabet))]
         else:
             decoded = x
         roomname += decoded
@@ -69,7 +56,7 @@ def find_code(code, interesting_code):
 
 parser = argparse.ArgumentParser(description='Advent of code.')
 parser.add_argument('inputfile', type=argparse.FileType('r'), help='Path to input file')
-parser.add_argument('-s', '--searchstring', help='String to find in decoded data', default="")
+parser.add_argument('-s', '--searchstring', help='String to find in decoded data', default="northpole")
 args = parser.parse_args()
 
 lines = args.inputfile.read().rstrip("\n").split("\n")

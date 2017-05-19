@@ -44,8 +44,6 @@ sector_sum = 0
 for line in lines:
     room_datum = re.split("-|\[", line.rstrip("]"))
     room_code = find_legit(room_datum)
-    if room_code > 0:
-        print(line)
     sector_sum += room_code
 
 print(sector_sum)

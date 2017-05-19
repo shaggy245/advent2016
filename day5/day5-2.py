@@ -21,11 +21,6 @@ Your puzzle input is still wtnhxymk.
 import argparse
 import hashlib
 
-def md5sum(decoded_string):
-    md5 = hashlib.new("md5")
-    md5.update(decoded_string.encode("utf-8"))
-    return md5.hexdigest()
-
 
 def calc_password(door_id):
     password = ["_"] * 8

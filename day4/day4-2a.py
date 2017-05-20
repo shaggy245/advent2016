@@ -38,20 +38,15 @@ def find_legit(room):
 def decode(code):
     roomname = ""
     for x in " ".join(code[:-2]):
-        if x in alphabet:
+        #print(x)
+        if x != " ":
             # Add code to char-index in alphabet, % 26 to cycle through ABC list
-            decoded = alphabet[((alphabet.index(x) + (int(code[-2]))) % len(alphabet))]
+            decoded = chr(97 + (ord(x) + int(code[-2]) - 97) % 26 )
         else:
             decoded = x
         roomname += decoded
     return roomname
 
-
-def find_code(code, interesting_code):
-    if interesting_code in code[0]:
-        return 1
-    else:
-        return 0
 
 
 parser = argparse.ArgumentParser(description='Advent of code.')
@@ -61,7 +56,7 @@ args = parser.parse_args()
 
 lines = args.inputfile.read().rstrip("\n").split("\n")
 
-alphabet = list(string.ascii_lowercase)
+#alphabet = list(string.ascii_lowercase)
 codes = []
 sector_sum = 0
 
@@ -69,8 +64,8 @@ for line in lines:
     room_datum = re.split("-|\[", line.rstrip("]"))
     room_code = find_legit(room_datum)
     if room_code > 0:
-        decoded_room = decode(room_datum), room_datum[-2]
-        if args.searchstring and find_code(decoded_room, args.searchstring):
+        decoded_room = decode(room_datum)
+        if args.searchstring in decoded_room:
             print(decoded_room)
             break
     sector_sum += room_code

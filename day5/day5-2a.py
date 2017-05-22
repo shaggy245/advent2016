@@ -45,6 +45,6 @@ def calc_password(door_id):
 parser = argparse.ArgumentParser(description='Advent of code.')
 parser.add_argument('inputfile', type=argparse.FileType('r'), help='Path to input file')
 args = parser.parse_args()
-lines = "wtnhxymk"
+lines = args.inputfile.read().rstrip("\n")
 
 print(calc_password(lines))

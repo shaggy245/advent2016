@@ -1,45 +1,6 @@
-"""--- Day 6: Signals and Noise ---
+import sys
 
-Something is jamming your communications with Santa. Fortunately, your signal is only partially jammed, and protocol in situations like this is to switch to a simple repetition code to get the message through.
+with open(sys.argv[1]) as f:
+    lines = f.read().rstrip("\n").split("\n")
 
-In this model, the same message is sent repeatedly. You've recorded the repeating message signal (your puzzle input), but the data seems quite corrupted - almost too badly to recover. Almost.
-
-All you need to do is figure out which character is most frequent for each position. For example, suppose you had recorded the following messages:
-
-eedadn
-drvtee
-eandsr
-raavrd
-atevrs
-tsrnev
-sdttsa
-rasrtv
-nssdts
-ntnada
-svetve
-tesnvt
-vntsnd
-vrdear
-dvrsen
-enarar
-The most common character in the first column is e; in the second, a; in the third, s, and so on. Combining these characters returns the error-corrected message, easter.
-
-Given the recording in your puzzle input, what is the error-corrected version of the message being sent?
-"""
-
-import argparse
-
-
-def decode_column(column):
-    return sorted(column, key=column.count, reverse=True)
-
-
-parser = argparse.ArgumentParser(description='Advent of code.')
-parser.add_argument('inputfile', type=argparse.FileType('r'), help='Path to input file')
-args = parser.parse_args()
-lines = args.inputfile.read().rstrip("\n").split("\n")
-
-# Updated to use single list comprehension to transpose and call decode_column
-code = [decode_column([row[i] for row in lines])[0] for i in range(len(lines[0]))]
-
-print("".join(code))
+print("".join([sorted(([row[i] for row in lines ]), key=([row[i] for row in lines]).count, reverse=True)[0] for i in range(len(lines[0]))]))

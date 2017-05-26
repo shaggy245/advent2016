@@ -31,7 +31,7 @@ import argparse
 
 
 def decode_column(column):
-    return sorted(column, key=column.count, reverse=True)
+    return sorted(column, key=column.count, reverse=True)[0]
 
 
 parser = argparse.ArgumentParser(description='Advent of code.')
@@ -42,6 +42,6 @@ lines = args.inputfile.read().rstrip("\n").split("\n")
 cols = [[row[i] for row in lines ] for i in range(len(lines[0]))]
 code = ""
 for x in cols:
-    code += decode_column(x)[0]
+    code += decode_column(x)
 
 print(code)

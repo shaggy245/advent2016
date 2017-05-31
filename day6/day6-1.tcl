@@ -2,11 +2,11 @@ set infile [open [lindex $argv 0] r]
 set file [read -nonewline $infile]
 close $infile
 
-# Transpose lines matrix
+# Create a matrix of each row and chars in the row
 foreach line [split $file "\n"] {
   lappend lines2 [split $line ""]
 }
-
+# Transpose lines matrix
 for {set index 0} {$index < [llength [lindex $lines2 0]]} {incr index} {
     lappend res [lsearch -all -inline -subindices -index $index $lines2 *]
 }

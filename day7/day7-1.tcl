@@ -8,7 +8,7 @@ set tls_count 0
 foreach line $lines {
   set in_hypernet 0
   set found_tls 0
-  for {set idx 0} {$idx < ([llength $line] - 3)} {incr idx} {
+  for {set idx 0} {$idx < ([string length $line] - 3)} {incr idx} {
     if {[string index $line [expr ($idx + 3)]] == "\["} {
       set in_hypernet 1
       incr idx 3
@@ -18,9 +18,8 @@ foreach line $lines {
       incr idx 3
       continue
     }
-    #### PROBLEM IN IF CLAUSE
-    if {[string index $line $idx] != [string index $line [expr ($idx + 1)]] and ([string index $line $idx] == [string index $line [expr ($idx + 3)]] and [string index $line [expr ($idx + 1)]] == [string index $line [expr ($idx + 2)]])} {
-      if {in_hypernet == 0} {
+    if {[string index $line $idx] != [string index $line [expr ($idx + 1)]] && ([string index $line $idx] == [string index $line [expr ($idx + 3)]] && [string index $line [expr ($idx + 1)]] == [string index $line [expr ($idx + 2)]])} {
+      if {$in_hypernet == 0} {
         set found_tls 1
       } else {
         set found_tls 0

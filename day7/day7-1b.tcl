@@ -1,7 +1,7 @@
 # Finite state machine reading whole file at once and iterating through chars
 
 set infile [open "input" r]
-set chars [read -nonewline $infile]
+set chars [split [read $infile] ""]
 close $infile
 
 #STATES
@@ -29,8 +29,9 @@ set char_b ""
 set state "outside_init"
 set tls_count 0
 
-while { [eof $infile] < 1 } {
-  set char [read $infile 1]
+foreach char $chars {
+  #puts $char
+  #set char [read $infile 1]
 
   # Check if char is \n, [, or ]
   switch $char {

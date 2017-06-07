@@ -7,7 +7,7 @@ import sys
 import string
 
 
-def face(direction, compass, facing):
+def face(direction, facing):
     """Keep track of facing direction."""
     try:
         lr = direction[0]
@@ -23,18 +23,18 @@ def face(direction, compass, facing):
         print exc
 
 
-def move(direction, compass, facing, lat, lon):
+def move(direction, facing, lat, lon):
     """Move around and return new lat or lon position."""
     try:
         spaces = int(direction[1:])
         # Track total longitude and latitude from start point
-        if compass[facing] == "n":
+        if facing == 0:
             lon += spaces
-        elif compass[facing] == "s":
+        elif facing == 2:
             lon -= spaces
-        elif compass[facing] == "e":
+        elif facing == 1:
             lat += spaces
-        elif compass[facing] == "w":
+        elif facing == 3:
             lat -= spaces
         return lat, lon
     except Exception, exc:
@@ -46,7 +46,6 @@ if __name__ == "__main__":
     with open(sys.argv[1]) as f:
         indir = string.split(f.read(), ", ")
 
-    compass = ["n", "e", "s", "w"]
     facing = 0
     lat = 0
     lon = 0
@@ -55,8 +54,8 @@ if __name__ == "__main__":
 
     for direction in indir:
         direction = direction.strip()
-        facing = face(direction, compass, facing)
-        lat, lon = move(direction, compass, facing, lat, lon)
+        facing = face(direction, facing)
+        lat, lon = move(direction, facing, lat, lon)
 
     total = abs(lon) + abs(lat)
     print total

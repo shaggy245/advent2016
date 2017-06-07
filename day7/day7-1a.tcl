@@ -51,7 +51,7 @@ while { [eof $infile] < 1 } {
         set state "inside_abba"
       } elseif {$state == "tls_inside_abba"} {
         set state "tls_inside_abba"
-      } elseif { [string range $state 0 3] == "tls"} {
+      } elseif { [string range $state 0 2] == "tls"} {
         set state "outside_abba"
       } else {
         set state "outside_init"
@@ -80,6 +80,7 @@ while { [eof $infile] < 1 } {
         set char_b $char
         set state "outside_ab"
       } else {
+        set char_a $char
         set state "outside_a"
       }
     }
@@ -96,7 +97,7 @@ while { [eof $infile] < 1 } {
       if { $char == $char_a } {
         set state "outside_abba"
       } elseif { $char == $char_b } {
-        set char_a $char_b
+        set char_a $char
         set state "outside_a"
       } else {
         set char_a $char_b
@@ -114,6 +115,7 @@ while { [eof $infile] < 1 } {
         set char_b $char
         set state "inside_ab"
       } else {
+        set char_a $char
         set state "inside_a"
       }
     }
@@ -148,6 +150,7 @@ while { [eof $infile] < 1 } {
         set char_b $char
         set state "tls_inside_ab"
       } else {
+        set char_a $char
         set state "tls_inside_a"
       }
     }

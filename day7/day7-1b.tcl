@@ -1,5 +1,8 @@
-# Finite state machine reading one char at a time from file
-set infile [open [lindex $argv 0] r]
+# Finite state machine reading whole file at once and iterating through chars
+
+set infile [open "input" r]
+set chars [read -nonewline $infile]
+close $infile
 
 #STATES
 #outside_init - outside blank state
@@ -185,5 +188,3 @@ while { [eof $infile] < 1 } {
 
 }
 puts $tls_count
-
-close $infile

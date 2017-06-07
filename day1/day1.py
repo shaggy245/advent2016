@@ -15,13 +15,9 @@ def face(direction, compass, facing):
             facing += 1
         elif lr == "L":
             facing -= 1
-        # If facing tracker is > compass length, circle back to beginning of
-        #   list
-        if facing >= len(compass):
-            facing = facing - len(compass)
-        # Always set facing to the positive-valued index of the list
-        #   this prevents issues regarding facing being < -len(compass)
-        facing = compass.index(compass[facing])
+
+        facing = facing % 4
+
         return facing
     except Exception, exc:
         print exc

@@ -101,9 +101,9 @@ parser.add_argument('inputfile', type=argparse.FileType('r'),
                     help='Path to input file')
 args = parser.parse_args()
 lines = args.inputfile.read().rstrip("\n").split("\n")
-width, height = map(int, args.screendimensions.split("x"))
+width, height = args.screendimensions.split("x")
 
-screen = Screen(width, height)
+screen = Screen(int(width), int(height))
 
 for line in lines:
     parse_input(line, screen)

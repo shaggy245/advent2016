@@ -31,15 +31,6 @@ import re
 import string
 
 
-def grab_number(line):
-    track = 0
-    numchars = ""
-    while line[track] in "0123456789":
-         numchars += line[track]
-         track += 1
-    return int(numchars)
-
-
 def grab_marker(line):
     track = 0
     marker = ""
@@ -50,23 +41,6 @@ def grab_marker(line):
         track += 1
     return marker
 
-
-def count_sequences(line):
-    shorter_line = ""
-    temp_count = 0
-    i = 0
-    while i < len(line):
-        if line[i]=="(":
-            shorter_line += str(temp_count)
-            marker = grab_marker(line[i:])
-            i += len(marker)
-            shorter_line += marker
-            temp_count = 0
-        else:
-            temp_count += 1
-            i += 1
-    shorter_line += str(temp_count)
-    print(shorter_line)
 
 def count_chars(line):
     ccount = 0

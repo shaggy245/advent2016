@@ -78,7 +78,7 @@ def count_chars(line):
     return ccount
 
 
-def yikes2(line, multiplier):
+def yikes(line, multiplier):
     global decompress_count
     i = 0
     while i < len(line):
@@ -96,43 +96,12 @@ def yikes2(line, multiplier):
             while ddata[-1] in "(0123456789x)":
                 i += 1
                 ddata += line[i]
-            yikes2(ddata, new_multiplier)
+            yikes(ddata, new_multiplier)
         elif line[i] in list(string.ascii_uppercase):
             lead_char_count = count_chars(line[i:])
             #print("CHARS:",line[i:i+lead_char_count],lead_char_count,multiplier)
             decompress_count += (lead_char_count * multiplier)
             i += lead_char_count
-        else:
-            break
-
-
-def yikes(line):
-    global decompress_count
-    i = 0
-    while i < len(line):
-    #while "(" in line:
-        #print(i)
-        if line[i]=="(":
-            #print("MARKER START:",line[i])
-            print("LINE:",line)
-            marker = grab_marker(line[i:])
-            char_count, dup = [int(y) for y in marker[1:-1].split("x")]
-            ddata = line[(i + len(marker)):(i + len(marker) + char_count)] * dup
-            i += len(marker) + char_count
-            print("DDATA:",ddata)
-            while ddata[-1] in "(0123456789x)":
-                i += 1
-                ddata += line[i]
-            if ddata[0] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-                lead_char_count = count_chars(line[i:])
-                decompress_count += lead_char_count
-                i += lead_char_count
-            yikes(ddata)
-        elif line[i] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-            lead_char_count = count_chars(line[i:])
-            decompress_count += lead_char_count
-            i += lead_char_count
-            #print("CHAR COUNT:", decompress_count)
         else:
             break
 
@@ -144,5 +113,5 @@ args = parser.parse_args()
 line = args.inputfile.read().rstrip("\n")
 decompress_count = 0
 #count_sequences(line)
-yikes2(line,1)
+yikes(line,1)
 print("FINAL:",decompress_count)

@@ -1,6 +1,6 @@
 # Finite state machine reading whole file at once and iterating through chars
 
-set infile [open "input" r]
+set infile [open "5input" r]
 set chars [split [read $infile] ""]
 close $infile
 

@@ -45,7 +45,7 @@ def grab_marker(line):
 def count_chars(line):
     ccount = 0
     for char in line:
-        if char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+        if char in string.ascii_uppercase:
             ccount +=  1
         else:
             return ccount
@@ -71,7 +71,7 @@ def yikes(line, multiplier):
                 i += 1
                 ddata += line[i]
             yikes(ddata, new_multiplier)
-        elif line[i] in list(string.ascii_uppercase):
+        elif line[i] in string.ascii_uppercase:
             lead_char_count = count_chars(line[i:])
             #print("CHARS:",line[i:i+lead_char_count],lead_char_count,multiplier)
             decompress_count += (lead_char_count * multiplier)

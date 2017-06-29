@@ -68,9 +68,6 @@ def yikes(line, multiplier):
             i += len(marker) + char_count
             #print("DDATA:",ddata)
             #print("UPDATE MULTIPLIER:",new_multiplier)
-            while ddata[-1] in "(0123456789x)":
-                i += 1
-                ddata += line[i]
             yikes(ddata, new_multiplier)
         else:
             lead_char_count = count_chars(line[i:])

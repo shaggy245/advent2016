@@ -61,7 +61,8 @@ def yikes(line, multiplier):
             #print("MARKER START:",line[i])
             #print("LINE:",line)
             marker = grab_marker(line[i:])
-            char_count, dup = [int(y) for y in marker[1:-1].split("x")]
+            #char_count, dup = [int(y) for y in marker[1:-1].split("x")]
+            char_count, dup = map(int, marker[1:-1].split("x"))
             ddata = line[(i + len(marker)):(i + len(marker) + char_count)]
             new_multiplier = multiplier * dup
             i += len(marker) + char_count
@@ -71,13 +72,11 @@ def yikes(line, multiplier):
                 i += 1
                 ddata += line[i]
             yikes(ddata, new_multiplier)
-        elif line[i] in string.ascii_uppercase:
+        else:
             lead_char_count = count_chars(line[i:])
             #print("CHARS:",line[i:i+lead_char_count],lead_char_count,multiplier)
             decompress_count += (lead_char_count * multiplier)
             i += lead_char_count
-        else:
-            break
 
 
 parser = argparse.ArgumentParser(description='Advent of code.')

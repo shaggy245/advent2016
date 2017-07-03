@@ -56,7 +56,6 @@ class Bin(object):
         self.bid = binid
         self.chips = []
 
-
     def addchip(self, chip):
         self.chips.append(chip)
 

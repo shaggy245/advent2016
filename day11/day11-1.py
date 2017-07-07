@@ -28,6 +28,12 @@ class Microchip(object):
         self.current = start
 
 
+class Floor(object):
+
+    def __init__(self):
+        pass
+
+
 def is_valid(floors):
     valid = True
     for floor in floors:

@@ -2,6 +2,30 @@ import argparse
 import re
 
 
+class Elevator(object):
+
+    def __init__(self):
+        self.current = 0
+
+    def up(self):
+        self.current += 1
+
+    def down(self):
+        self.current -= 1
+
+
+class Generator(object):
+
+    def __init__(self, start):
+        self.current = start
+
+
+class Microchip(object):
+
+    def __init__(self, start):
+        self.current = start
+
+
 def is_valid(floors):
     valid = True
     for floor in floors:
@@ -58,13 +82,13 @@ def elevator_mover(floors, currentfloor, totalmoves):
     # Possible elevator actions are
     # move 2 items down, move 1 item down, move 1 item up, move 2 items up
     if currentfloor == 0:
-        elevator_actions = (1, 2)
+        elevator_actions = (2, 1)
     elif currentfloor == 3:
         elevator_actions = (-2, -1)
     else:
-        elevator_actions = (-2, -1, 1, 2)
+        elevator_actions = (-2, -1, 2, 1)
+\
 
-    
 
 
 

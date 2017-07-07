@@ -4,13 +4,15 @@ import re
 
 class Elevator(object):
 
-    def __init__(self):
-        self.current = 0
+    def __init__(self, start):
+        self.current = start
 
     def up(self):
+        self.previous = self.current
         self.current += 1
 
     def down(self):
+        self.previous = self.current
         self.current -= 1
 
 

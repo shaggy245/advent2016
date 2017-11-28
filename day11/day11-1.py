@@ -170,9 +170,9 @@ if __name__ == "__main__":
         # Get the first state
         new_state = search_queue.popleft()
 
-        if [new_state["generators"],new_state["microchips"]] in searched[new_state["current_floor"]]:
+        if new_state["generators"] + new_state["microchips"] in searched[new_state["current_floor"]]:
             #print("ALREADY SEARCHED")
-            #print(new_state)
+            #print(searched)
             continue
 
         #print(new_state)
@@ -184,6 +184,6 @@ if __name__ == "__main__":
             break
 
         #searched.append([new_state["current_floor"],new_state["generators"],new_state["microchips"]])
-        searched[new_state["current_floor"]].append([new_state["generators"],new_state["microchips"]])
+        searched[new_state["current_floor"]].append(new_state["generators"] + new_state["microchips"])
         # Determine the new states and add them to the search_queue
         search_queue += make_new_states(new_state)

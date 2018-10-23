@@ -1,9 +1,4 @@
-input = []
-File.open(ARGV.first, "r") do |f|
-  f.each_line do |line|
-    input.append(line)  
-  end
-end
+input = File.readlines(ARGV.first)
 
 # 
 facing = 0

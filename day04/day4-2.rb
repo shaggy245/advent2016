@@ -2,7 +2,7 @@ input = File.readlines(ARGV.first, chomp: true)
 
 def find_legit(ename)
   characters = Hash.new(0)
-  ename.chars.each do |char|
+  ename.each_char do |char|
     characters[char] += 1
   end
   characters.sort_by {|k, v| [-v, k]}.flatten.keep_if {|x| x.is_a? String}[0,5].join()
